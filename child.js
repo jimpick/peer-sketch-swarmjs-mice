@@ -8,7 +8,23 @@ global.WebSocket = require('isomorphic-ws')
 const SwarmDBImport = require('@swarm/db')
 const { default: SwarmDB, InMemory: Storage, UUID, Verbose } = SwarmDBImport
 
-const { mouseQuery, miceSubscription } = require('./graphql')
+const gql = require('graphql-tag')
+
+const miceSubscription = gql`
+  subscription Mice {
+    result @node(id: "mice") {
+      version
+      length
+      list: id @slice(begin: 0, end: 10) {
+        id
+        lastUpdate: version @date
+        x
+        y
+        symbol
+      }
+    }
+  }
+`
 
 let swarm
 let id
@@ -82,15 +98,14 @@ const peerMachine = Machine({
         id: 'moveTheMouse',
         src: async () => {
           const symbol = process.env['PEER_LABEL'].slice(0, 1)
-          const lowerLabel = process.env['PEER_LABEL'].slice(0, 1)
           const step = 10
           const interval = 500
-          if (lowerLabel === 'a') {
+          if (symbol === 'a') {
             for (let x = 0, y = 0; x <= maxXY; x += step, y += step) {
               await swarm.set(mouse, {x, y, symbol})
               await delay(interval)
             }
-          } else if (lowerLabel === 'b') {
+          } else if (symbol === 'b') {
             for (let x = 0, y = maxXY; x <= maxXY; x += step, y -= step) {
               await swarm.set(mouse, {x, y, symbol})
               await delay(interval)
