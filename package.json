@@ -1,0 +1,22 @@
+{
+  "name": "peer-sketch-swarmjs-mice",
+  "version": "1.0.0",
+  "description": "Let's try out swarmjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node parent 2> /dev/null",
+    "test": "npm start"
+  },
+  "keywords": [],
+  "author": "Jim Pick (@jimpick)",
+  "license": "MIT",
+  "dependencies": {
+    "@swarm/db": "^0.1.2",
+    "chalk": "^2.4.1",
+    "delay": "^4.1.0",
+    "diffy": "^2.1.0",
+    "get-port": "^4.1.0",
+    "isomorphic-ws": "^4.0.1",
+    "xstate": "^4.2.3"
+  }
+}
