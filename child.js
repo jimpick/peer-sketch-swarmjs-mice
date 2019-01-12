@@ -42,7 +42,7 @@ const peerMachine = Machine({
       onEntry: () => {
         swarm = new SwarmDB({
           storage: new Storage(),
-          upstream: new Verbose('ws://10.0.1.19:31415'),
+          upstream: new Verbose('ws://0.0.0.0:31415'),
           db: {
             name: 'default',
             clockLen: 7,
